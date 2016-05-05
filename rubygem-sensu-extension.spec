@@ -2,7 +2,7 @@
 %global gem_name sensu-extension
 
 Name:           rubygem-%{gem_name}
-Version:        1.3.0
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        The Sensu extension library
 Group:          Development/Languages
@@ -82,6 +82,9 @@ popd
 %{gem_instdir}/spec
 
 %changelog
+* Thu May 05 2016 Martin Mágr <mmagr@redhat.com> - 1.5.0-1
+- Updated to upstream version 1.5.0
+
 * Thu Feb 25 2016 Martin Mágr <mmagr@redhat.com> - 1.3.0-1
 - Updated to upstream version 1.3.0
 
