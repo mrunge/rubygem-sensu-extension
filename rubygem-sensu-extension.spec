@@ -2,7 +2,7 @@
 %global gem_name sensu-extension
 
 Name:           rubygem-%{gem_name}
-Version:        1.5.0
+Version:        1.5.1
 Release:        1%{?dist}
 Summary:        The Sensu extension library
 Group:          Development/Languages
@@ -10,15 +10,16 @@ License:        MIT
 URL:            https://github.com/sensu/sensu-extension
 Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 
-BuildRequires: ruby(release)
-BuildRequires: rubygems-devel
-BuildRequires: ruby
-BuildRequires: rubygem(rspec)
-BuildRequires: rubygem(eventmachine)
-#BuildRequires: rubygem(sensu-em)
+BuildRequires:  ruby(release)
+BuildRequires:  rubygems-devel
+BuildRequires:  ruby
+BuildRequires:  rubygem(rspec)
+BuildRequires:  rubygem(eventmachine)
+
+Requires:       rubygem(eventmachine)
 
 BuildArch:     noarch
-%if 0%{?fc20} || 0%{?el7}
+%if 0%{?rhel}
 Provides:      rubygem(%{gem_name}) = %{version}
 %endif
 
@@ -82,6 +83,9 @@ popd
 %{gem_instdir}/spec
 
 %changelog
+* Mon Dec 19 2016 Martin Mágr <mmagr@redhat.com> - 1.5.1-1
+- Updated to upstream version 1.5.1
+
 * Thu May 05 2016 Martin Mágr <mmagr@redhat.com> - 1.5.0-1
 - Updated to upstream version 1.5.0
 
