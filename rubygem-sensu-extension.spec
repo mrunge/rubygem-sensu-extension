@@ -9,6 +9,7 @@ Group:          Development/Languages
 License:        MIT
 URL:            https://github.com/sensu/sensu-extension
 Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
+Source1:        https://github.com/sensu/%{gem_name}/archive/v%{version}.tar.gz#/%{gem_name}-%{version}.tar.gz
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -38,9 +39,7 @@ Documentation for %{name}.
 
 %prep
 gem unpack %{SOURCE0}
-
 %setup -q -D -T -n  %{gem_name}-%{version}
-
 gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
 
 %build
@@ -55,6 +54,9 @@ gem build %{gem_name}.gemspec
 mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
+
+install -d -p %{_builddir}%{gem_instdir}
+tar -xvzf %{SOURCE1} -C %{_builddir}/%{gem_name}-%{version}/%{gem_instdir} --strip-components=1 %{gem_name}-%{version}/spec
 
 rm -f %{buildroot}%{gem_instdir}/{.gitignore,.travis.yml}
 
@@ -74,13 +76,10 @@ popd
 %{gem_spec}
 %doc %{gem_instdir}/LICENSE.txt
 %doc %{gem_instdir}/README.md
-%{gem_instdir}/Gemfile
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Rakefile
 %{gem_instdir}/%{gem_name}.gemspec
-%{gem_instdir}/spec
 
 %changelog
 * Mon Dec 19 2016 Martin Mágr <mmagr@redhat.com> - 1.5.1-1
